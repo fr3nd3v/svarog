@@ -1,0 +1,29 @@
+Act as an expert Frontend Developer and UI/UX Designer. Refactor my current website on Replit according to the following requirements:
+
+1. VISUAL & STYLE UPDATES:
+- Background: Remove any film grain, noise, or gritty textures. Make the background a clean, deep dark tone.
+- Transitions: Implement smooth, minimalist transitions between black (#000000) and deep red accents. Use modern, trending micro-interactions, clean hover effects, and subtle fade-ins using CSS transitions/animations or Tailwind classes.
+- Typography & Layout: Increase the font size of lowercase text and body copy to ensure it is highly readable and clean. 
+- Spacing & Anti-Overlap Audit: Check the entire site for text overlap, text sticking together, or poor vertical spacing. Perform a precise layout rebalancing by applying proper margins, padding, and line-heights (using standard design-system scales like Tailwind's spacing) to make the text feel breathable.
+
+2. NEW CONTENT & SECTION REFACTORING:
+
+- "Нам доверяют" (Our Clients) Block:
+  Add a stylized partner section displaying companies we have collaborated with for corporate events. Create placeholder grid layouts for their logos. Mention these brands: "Т-Банк", "Татнефть", and "Фестиваль Каракуз", along with a note about various other partners.
+
+- Archery Section Update:
+  Modify the archery section ("Стрельба из лука"). Expand it to include crossbow shooting ("Стрельба из арбалета") with equal structural importance.
+
+- Instructor Experience:
+  Update the team/instructor credentials to state that all instructors have over 3 or 6 years of experience in weapon throwing ("Стаж метания у всех инструкторов более 3 или 6 лет").
+
+- "Столица Нестандартного Метания" (Capital of Non-Standard Throwing) Block:
+  Create or update this section. Use copy that emphasizes that we were the pioneers ("родоначальники") of many unique throwing exercises and role-playing/throwing events both in Tatarstan and beyond its borders.
+
+- Medieval Rental Service Block:
+  Add a service section for renting medieval gear (historical clothing, swords, chainmail, bows, etc.). Add text specifying that this service has already successfully provided gear for short films, commercial videos, and themed barbershop events.
+
+- Corporate Events & Teambuilding Block:
+  Add a specialized section about corporate events and tailor-made teambuildings. Highlight our custom approach: we analyze the specific pain points of a business and resolve them through immersive gameplay and throwing activities, helping teams become more united and effectively solving current organizational problems.
+
+Review the final layout to guarantee fully responsive design (mobile/desktop) and flawless spacing.
