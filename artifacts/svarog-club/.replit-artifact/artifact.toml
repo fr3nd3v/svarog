@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Клуб Сварог"
+description = "Адаптивный сайт клуба исторического оружия «Сварог» с направлениями тренировок, мероприятиями, ценами, мастерами и формой записи на пробное занятие."
+version = "1.0.0"
+id = "artifacts/svarog-club"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24241
+
+[services.development]
+run = "pnpm --filter @workspace/svarog-club run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/svarog-club", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/svarog-club/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24241"
+BASE_PATH = "/"
