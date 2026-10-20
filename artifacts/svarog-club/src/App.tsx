@@ -3,13 +3,19 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import InstructorCarousel from '@/components/instructor-carousel';
+import SvarogPricing from '@/components/svarog-pricing';
+import { CLUB_PHONE_HREF, CLUB_PHONE_LABEL, CLUB_VK_LABEL, CLUB_VK_URL } from '@/lib/club-contact';
+import { publicAssetUrl } from '@/lib/public-asset-url';
 import NotFound from '@/pages/not-found';
 import { Route, Switch, useLocation, Router as WouterRouter } from 'wouter';
-import { ArrowDown, ArrowRight, Axe, BowArrow, Check, ChevronDown, Clock3, Compass, Crosshair, Menu, MoveUpRight, Shield, Sparkles, Swords, X, type LucideIcon } from 'lucide-react';
+import { ArrowDown, ArrowRight, Axe, BowArrow, Check, ChevronDown, Compass, Crosshair, Menu, MessageCircle, MoveUpRight, Phone, Shield, Sparkles, Swords, X, type LucideIcon } from 'lucide-react';
 import heroImage from './assets/svarog-hero.jpg';
 import './svarog.css';
 
 const queryClient = new QueryClient();
+const svarogLogo = publicAssetUrl('svarog-star-red.webp');
+const map2GisSrc = 'https://makemap.2gis.ru/widget?data=eJxFUl2PojAU_S_dxzGTUgHFZB4cdAAHEFlnkG7mgY8uVgslUD_A-N-3MrvZNn2555x7T3PPDfAmJw3JLcJLIhpKWjD7dQOiqwmYgTeSiFNDwAjUDa9JIwb8BjLOeCPxHxBNld9I4oIK9lDAd3vTCvMC48XmLMxeQjlps4bWgvJKEgJ7_hRYyyKxVwwfIE3sEGa2p7vdtMOI9W61Ulyk7ePS5zi6nshPo8LR9Oz384u3eLzlxT9kmrdw1PU2po4d7rMyZ_kC0h1atXGkNQ597XbtXgLKbZYn1nXPdnyIom0Vj7mRqs2RX6z7l4vcRQeZa1a07ma2UXhbfGFLNoiLt8OCcq7dPx5wqZySNH1nB144fQfSlw60ofkIKNNx47umH6JhxtPHAuf02ojcvRZY7SHa_pKpfYoZ0G820M3CpnUdfEurFOk6o6lndPyQ-pW56wMWUaVTnqq852nO4tw8IJL45SbShlHSp3aR92x_X1aeSJDn10S_Z-ZIaZj-U9vO-hoIEwCY3dzEtYcxuewEJbn-GbnLNzN0TBj-L6cumj5FJjGJSheXuSyeqfKyRXMFPjv3Eeg-A5H91j932QEnFZC8jMuA0SrRAzB0dCzqqoI6iNNe56oU11RvqSe5mBmaPr9awTKpA54S7_DcAMsEWD2zVV1xdAUHY6NsT4C7IEP7bTxWJ0YSBlPFE3647yU7qayq0wVZyzaE8LwUBXNidz_ACTQ6hA';
 
 type Direction = { id: string; number: string; icon: LucideIcon; title: string; subtitle: string; description: string; detail: string; features: string[] };
 const directions: Direction[] = [
@@ -19,19 +25,11 @@ const directions: Direction[] = [
   { id:'combat', number:'04', icon:Swords, title:'СМБ · современный мечевой бой', subtitle:'Сражение без синяков.', description:'Безопасное фехтование на мягком оружии с защитной экипировкой.', detail:'Пробуй исторический фехтовальный азарт в мягком безопасном формате. Тренер покажет базовые действия и правила, экипировка предоставляется клубом.', features:['Мягкое безопасное оружие','Защитная экипировка клуба','Формат для начинающих'] },
 ];
 
-const prices = [
-  { name:'Пробное посещение', note:'Выбери направление и познакомься с клубом', price:'Уточнить у клуба', tag:'ПЕРВЫЙ ШАГ' },
-  { name:'Абонемент: стрельба из лука и арбалета', note:'Это два отдельных направления; формат занятий уточните у клуба', price:'Уточнить у клуба' },
-  { name:'Абонемент: метание', note:'Ножи и топоры', price:'Уточнить у клуба' },
-  { name:'Абонемент: мечевой бой', note:'Мягкое оружие и защитная экипировка', price:'Уточнить у клуба' },
-  { name:'Аренда дорожки и снаряжения', note:'Лук, арбалет, историческая одежда и другие предметы — наличие и условия уточняйте', price:'Уточнить у клуба' },
-];
-
 function LeadForm({ compact = false }: { compact?: boolean }) {
   const [name,setName] = useState(''); const [phone,setPhone] = useState(''); const [direction,setDirection] = useState(''); const [error,setError] = useState(''); const [sent,setSent] = useState(false);
   useEffect(()=>{const listener=(e:Event)=>setDirection((e as CustomEvent<string>).detail);window.addEventListener('svarog-direction',listener);return()=>window.removeEventListener('svarog-direction',listener);},[]);
-  function simulateSubmit(payload: { name: string; phone: string; direction: string }) {
-    console.info('Demo lead submission — connect to club CRM:', payload);
+  function simulateSubmit() {
+    console.info('Demo lead form submitted. No personal data was sent or saved.');
     return Promise.resolve({ ok:true });
   }
   async function submit(event: FormEvent<HTMLFormElement>) {
@@ -40,7 +38,7 @@ function LeadForm({ compact = false }: { compact?: boolean }) {
     const digits = phone.replace(/\D/g,'');
     if (digits.length < 10 || digits.length > 15) { setError('Проверь номер телефона: нужно не меньше 10 цифр.'); return; }
     if (!direction) { setError('Выбери направление, чтобы мы подготовили снаряжение.'); return; }
-    await simulateSubmit({ name:name.trim(), phone:phone.trim(), direction }); setSent(true);
+    await simulateSubmit(); setSent(true);
   }
   return sent ? <div className="success-card" role="status" data-testid="status-lead-success"><span className="success-icon"><Check size={22}/></span><div><strong>Демо-заявка заполнена.</strong><p>Данные не переданы клубу: отправка сейчас демонстрационная. Подключение контактов и обработку заявок нужно настроить.</p><button className="text-action" data-testid="button-reset-lead" onClick={()=>{setSent(false);setName('');setPhone('');setDirection('');}}>Заполнить ещё раз</button></div></div> :
     <form onSubmit={submit} className={`lead-form ${compact?'lead-form-compact':''}`} noValidate>
@@ -66,7 +64,7 @@ function AppContent() {
   const goForm=(direction?:string)=>{if(direction)window.dispatchEvent(new CustomEvent('svarog-direction',{detail:direction}));document.getElementById('signup')?.scrollIntoView({behavior:'smooth'});setChosen(null);setMobileOpen(false);};
   return <div className="site">
     <header className="topbar"><div className="wrap nav-inner">
-      <a href="#top" className="brand" aria-label="Сварог — наверх"><span className="brand-mark"><span>С</span></span><span className="brand-name">СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small></span></a>
+      <a href="#top" className="brand" aria-label="Сварог — наверх"><span className="brand-mark"><img src={svarogLogo} alt="" width="40" height="40"/></span><span className="brand-name">СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small></span></a>
       <nav className="nav-desktop" aria-label="Главная навигация"><a className="nav-link" href="#directions">Направления</a><a className="nav-link" href="#first-visit">Первый визит</a><a className="nav-link" href="#events">События</a><a className="nav-link" href="#team-building">Командам</a><a className="nav-link" href="#partners">Партнёры</a><a className="nav-link" href="#services">Услуги</a><a className="nav-link" href="#prices">Цены</a><a className="nav-link" href="#contacts">Контакты</a></nav>
       <a className="nav-cta" href="#signup">Попробовать <ArrowRight size={15}/></a>
       <button className="mobile-menu-btn" data-testid="button-mobile-menu" aria-label={mobileOpen?'Закрыть меню':'Открыть меню'} aria-expanded={mobileOpen} onClick={()=>setMobileOpen(!mobileOpen)}>{mobileOpen?<X/>:<Menu/>}</button>
@@ -79,13 +77,13 @@ function AppContent() {
         <div className="wrap hero-content"><div className="hero-copy reveal">
           <div className="hero-overline"><span className="overline-mark"/> ИСТОРИЯ, КОТОРУЮ МОЖНО ПРОЖИТЬ</div>
           <div className="crest"><span className="crest-line"/><span className="crest-text">С В А Р О Г</span><span className="crest-line"/></div>
-          <h1 className="display">Клуб живой истории<br/>и оружия <em>Сварог.</em><br/><span>Почувствуй дух приключений<br/>в самом центре города!</span></h1>
+          <h1 className="display">Клуб живой истории<br/>и оружия <em>Сварог.</em><br/><span>Почувствуй дух приключений<br/>в клубе «Сварог».</span></h1>
           <p className="hero-description">Лук и арбалет, метание, безопасный бой на мягких мечах. Первый раз? Именно с этого и начинается путь.</p>
           <div className="hero-actions"><a className="btn-primary" href="#signup">Записаться на пробное <ArrowRight size={17}/></a><a className="btn-ghost" href="#directions">Выбрать направление <ArrowDown size={15}/></a></div>
           <div className="hero-note"><Shield size={15}/> Начинающим рады. Снаряжение и вводный инструктаж — в клубе.</div>
         </div>
         <div className="hero-seal" aria-label="Сварог — клуб приключений"><Sparkles className="seal-star" size={20}/><span>ВОЙДИ<br/>В ЛЕГЕНДУ</span><small>С · Ж · И</small></div>
-        <div className="hero-bottom"><span>ЖИВАЯ ИСТОРИЯ В ГОРОДЕ</span><span>01 / ПЕРВЫЙ ШАГ</span></div></div>
+        <div className="hero-bottom"><span>КЛУБ ЖИВОЙ ИСТОРИИ</span><span>01 / ПЕРВЫЙ ШАГ</span></div></div>
       </section>
 
       <section className="intro-strip"><div className="wrap intro-grid"><div className="intro-title"><span className="eyebrow">НЕ НУЖНО БЫТЬ ГЕРОЕМ</span><h2 className="serif">Достаточно<br/>прийти.</h2></div><p>Мы создали пространство, где можно попробовать новое без подготовки и специальной формы. Тренер встретит, покажет основы и поможет выбрать темп — от первой стрелы или арбалетного выстрела до дружеского поединка.</p><div className="intro-stats"><div><strong>4</strong><span>направления</span></div><i/><div><strong>0</strong><span>опыта нужно</span></div></div></div></section>
@@ -108,15 +106,15 @@ function AppContent() {
 
       <section className="section partners-section" id="partners"><div className="wrap"><div className="section-head reveal-on-scroll"><div><span className="eyebrow">СОВМЕСТНЫЕ СОБЫТИЯ И ПРОЕКТЫ</span><h2 className="section-title">Нам доверяют</h2></div><p className="section-aside">Бренды и события, с которыми клуб работал. Типографические подписи — не официальные логотипы.</p></div><div className="partner-grid reveal-on-scroll">{['Т-Банк','Татнефть','Фестиваль Каракуз','И другие партнёры'].map((name,i)=><div className={`partner-name partner-${i+1}`} key={name}><span>{name}</span>{i===3&&<small>РАЗНЫЕ КОМАНДЫ И СОБЫТИЯ</small>}</div>)}</div></div></section>
 
-      <section className="section prices-section" id="prices"><div className="wrap"><div className="section-head reveal-on-scroll"><div><span className="eyebrow">ПОНЯТНЫЕ УСЛОВИЯ</span><h2 className="section-title">Сколько стоит<br/>первый шаг?</h2></div><p className="section-aside">Точные цены клуб не указал — мы не будем придумывать. Напишите нам, и администратор подскажет актуальные условия.</p></div><div className="price-table reveal-on-scroll">{prices.map((item,i)=><div className={`price-row ${i===0?'price-featured':''}`} key={item.name}><div className="price-name">{item.tag&&<span className="price-tag">{item.tag}</span>}<strong>{item.name}</strong><small>{item.note}</small></div><span className="price-value">{item.price}</span><a href="#signup" aria-label={`Узнать цену: ${item.name}`} className="price-link"><ArrowRight size={17}/></a></div>)}</div><div className="price-foot"><Clock3 size={15}/> Стоимость, расписание и наличие мест — уточните у администратора.</div></div></section>
+      <SvarogPricing/>
 
-      <section className="section trainers-section"><div className="wrap"><div className="section-head reveal-on-scroll"><div><span className="eyebrow">ЛЮДИ, КОТОРЫЕ ВСТРЕТЯТ</span><h2 className="section-title">Наставники<br/>вашего первого шага.</h2></div><p className="section-aside">Имена, фотографии, биографии и прочие достижения требуют подтверждения клуба. Стаж метания у каждого инструктора — более 3 лет.</p></div><div className="trainer-grid">{[['АРТЕМ «СЕВЕР»','Наставник по стрельбе из лука и арбалета','«Сначала почувствуй дыхание. Потом отпусти.»','Имя, стаж преподавания и квалификация — подтвердить клубом.','ЛУК И АРБАЛЕТ'],['МИРА «ИСКРА»','Инструктор по метанию','«Точность начинается не с силы, а с внимания.»','Имя и личные достижения — подтвердить клубом.','МЕТАНИЕ'],['ГЛЕБ «ЩИТ»','Тренер по мягкому мечевому бою','«Безопасность — наш первый и главный приём.»','Имя, стаж преподавания и достижения — подтвердить клубом.','МЕЧЕВОЙ БОЙ']].map(([name,role,quote,achievement,discipline],i)=><article className="trainer-card reveal-on-scroll" key={name} style={{transitionDelay:`${i*100}ms`}}><div className={`trainer-portrait portrait-${i+1}`}><span>{['С','И','Щ'][i]}</span><small>ПРОФИЛЬ ДЛЯ ЗАПОЛНЕНИЯ</small></div><div className="trainer-info"><span className="eyebrow">{discipline}</span><h3>{name}</h3><p className="trainer-role">{role}</p><blockquote>{quote}</blockquote><p className="achievement">{achievement}</p></div></article>)}</div><p className="instructor-proof">Стаж метания у всех инструкторов — более 3 лет.</p></div></section>
+      <section className="section trainers-section"><div className="wrap"><div className="section-head reveal-on-scroll"><div><span className="eyebrow">ЛЮДИ, КОТОРЫЕ ВСТРЕТЯТ</span><h2 className="section-title">Наставники<br/>вашего первого шага.</h2></div><p className="section-aside">Фотографии и личные профили можно добавить отдельно. Стаж метания у всех инструкторов — более 3 лет.</p></div><InstructorCarousel/><p className="instructor-proof">Стаж метания у всех инструкторов — более 3 лет.</p></div></section>
 
-      <section className="signup-section" id="signup"><div className="signup-flare"/><div className="wrap signup-layout"><div className="signup-copy reveal-on-scroll"><span className="eyebrow">ТВОЯ ИСТОРИЯ НАЧИНАЕТСЯ ЗДЕСЬ</span><h2 className="display">Не наблюдай<br/>за приключением.<br/><em>Войди в него.</em></h2><p>Оставь имя, телефон и направление. Администратор поможет сделать первый визит простым.</p><div className="signup-promise"><Shield size={19}/><span>Никакого опыта не требуется.<br/><b>Экипировка будет ждать.</b></span></div></div><div className="signup-panel reveal-on-scroll"><div className="panel-cap"><span>ФОРМА · ПЕРВЫЙ УРОВЕНЬ</span><span>СВЯЗЬ С МАСТЕРОМ</span></div><h3 className="serif">Записаться на пробное</h3><p>Оставь контакт — обсудим удобный формат.</p><LeadForm/><div className="panel-footer">ОТПРАВКА ДЕМО · ПОДКЛЮЧЕНИЕ КЛУБОМ</div></div></div></section>
+      <section className="signup-section" id="signup"><div className="signup-flare"/><div className="wrap signup-layout"><div className="signup-copy reveal-on-scroll"><span className="eyebrow">ТВОЯ ИСТОРИЯ НАЧИНАЕТСЯ ЗДЕСЬ</span><h2 className="display">Не наблюдай<br/>за приключением.<br/><em>Войди в него.</em></h2><p>Для записи напишите в группу ВКонтакте или позвоните. Форма справа демонстрационная и не передаёт данные.</p><div className="signup-promise"><Shield size={19}/><span>Никакого опыта не требуется.<br/><b>Экипировка будет ждать.</b></span></div><div className="signup-direct-links"><a href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer"><MessageCircle size={17}/>Написать в VK</a><a href={CLUB_PHONE_HREF}><Phone size={17}/>{CLUB_PHONE_LABEL}</a></div></div><div className="signup-panel reveal-on-scroll"><div className="panel-cap"><span>ФОРМА · ПЕРВЫЙ УРОВЕНЬ</span><span>ДЕМО</span></div><h3 className="serif">Записаться на пробное</h3><p>Форма помогает выбрать направление, но пока не отправляет заявку.</p><LeadForm/><div className="panel-footer">ДАННЫЕ НЕ ОТПРАВЛЯЮТСЯ И НЕ СОХРАНЯЮТСЯ</div></div></div></section>
 
-      <section className="section location-section" id="contacts"><div className="wrap location-layout"><div className="location-copy reveal-on-scroll"><span className="eyebrow">ПРИХОДИ К НАМ</span><h2 className="section-title">Приключение —<br/>почти в центре города.</h2><p>Точный адрес клуба и ориентиры сейчас уточняются. Напишите или позвоните — подскажем, как добраться.</p><div className="contact-lines"><div><span>ТЕЛЕФОН</span><a href="#signup">+7 (___) ___-__-__ <small>плейсхолдер — заменить</small></a></div><div><span>ВКОНТАКТЕ</span><a href="https://vk.com/club_placeholder" target="_blank" rel="noreferrer">vk.com/club_placeholder <small>ссылка для замены</small></a></div></div><a className="btn-ghost" href="#signup">Задать вопрос клубу <ArrowRight size={16}/></a></div><div className="map-card reveal-on-scroll"><div className="map-grid"/><div className="map-route route-a"/><div className="map-route route-b"/><div className="map-pin"><span><Compass size={20}/></span><b>СВАРОГ</b></div><div className="map-corner map-top">КЛУБ ПОЧТИ В ЦЕНТРЕ<br/>ГОРОДА</div><div className="map-corner map-bottom">АДРЕС / ОРИЕНТИР<br/>ЗАПОЛНИТЬ КЛУБУ</div><div className="map-coord">МЕСТОПОЛОЖЕНИЕ<br/>УТОЧНЯЕТСЯ</div></div></div></section>
+      <section className="section location-section" id="contacts"><div className="wrap location-layout"><div className="location-copy reveal-on-scroll"><span className="eyebrow">ПРИХОДИ К НАМ</span><h2 className="section-title">Клуб «Сварог»<br/>на карте 2ГИС.</h2><p>Откройте карту ниже, чтобы посмотреть расположение клуба. Уточнить маршрут, расписание и условия можно по телефону или в группе ВКонтакте.</p><div className="contact-lines"><div><span>ТЕЛЕФОН</span><a href={CLUB_PHONE_HREF} data-testid="link-club-phone">{CLUB_PHONE_LABEL}</a></div><div><span>ГРУППА ВКОНТАКТЕ</span><a href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer" data-testid="link-club-vk">{CLUB_VK_LABEL}</a></div></div><a className="btn-ghost" href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">Задать вопрос в VK <ArrowRight size={16}/></a></div><div className="map-card reveal-on-scroll"><iframe id="map_480809636" className="map-iframe" title="Клуб «Сварог» на карте 2ГИС" src={map2GisSrc} width="100%" height="600px" loading="lazy" referrerPolicy="strict-origin-when-cross-origin" sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"/></div></div></section>
     </main>
-    <footer className="footer"><div className="wrap footer-inner"><a href="#top" className="brand"><span className="brand-mark"><span>С</span></span><span className="brand-name">СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small></span></a><p>Живая история. Настоящий азарт.<br/>И место для первого шага.</p><a className="footer-top" href="#top">Наверх <ChevronDown size={15}/></a></div><div className="wrap footer-bottom"><span>© СВАРОГ · ДАННЫЕ КЛУБА ДОБАВЯТСЯ ПОСЛЕ УТОЧНЕНИЯ</span><a href="#signup">Оставить заявку <ArrowRight size={13}/></a></div></footer>
+    <footer className="footer"><div className="wrap footer-inner"><a href="#top" className="brand" aria-label="Сварог — наверх"><span className="brand-mark"><img src={svarogLogo} alt="" width="40" height="40"/></span><span className="brand-name">СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small></span></a><p>Живая история. Настоящий азарт.<br/>И место для первого шага.</p><div className="footer-contact-links"><a href={CLUB_PHONE_HREF}>{CLUB_PHONE_LABEL}</a><a href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">Группа ВКонтакте</a></div><a className="footer-top" href="#top">Наверх <ChevronDown size={15}/></a></div><div className="wrap footer-bottom"><span>© КЛУБ ЖИВОЙ ИСТОРИИ «СВАРОГ»</span><a href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">Группа ВКонтакте <ArrowRight size={13}/></a></div></footer>
     <DirectionDialog selected={chosen} close={()=>setChosen(null)} choose={()=>goForm(chosen?.title)}/>
     <button className="mobile-sticky-cta" onClick={()=>goForm()}>Записаться на пробное <ArrowRight size={16}/></button>
   </div>;

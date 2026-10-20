@@ -183,3 +183,167 @@
   .price-foot { font-size:12px; line-height:1.6; }
   .footer-bottom { font-size:10px; }
 }
+
+/* Official mark and direct contact links */
+.brand-mark { width:42px; height:42px; border:0; transform:none; color:inherit; }
+.brand-mark img { display:block; width:100%; height:100%; object-fit:contain; }
+.signup-direct-links { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.signup-direct-links a { min-height:46px; display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:10px 14px; border:1px solid rgba(221,178,105,.38); color:#e8ddca; text-decoration:none; font-size:16px; transition:background .2s,border-color .2s; }
+.signup-direct-links a:hover { background:rgba(153,40,44,.2); border-color:#c04340; }
+.footer-contact-links { display:flex; flex-direction:column; gap:8px; }
+.footer-contact-links a { color:#c9b995; font-size:16px; text-decoration:none; }
+.footer-contact-links a:hover { color:#f0d394; }
+
+/* Responsive 2GIS embed */
+.map-card { height:clamp(360px,42vw,600px); background:#171719; }
+.map-iframe { display:block; width:100%; height:100%; min-height:320px; border:0; }
+
+/* Pricing, using the club's supplied prices and formats */
+.pricing-safety { display:flex; align-items:flex-start; gap:13px; max-width:900px; margin:5px 0 42px; padding:17px 19px; border-left:2px solid #bd393d; background:rgba(255,255,255,.025); color:#d2c9b9; }
+.pricing-safety svg { flex:none; color:#d4ad69; margin-top:2px; }
+.pricing-safety p { margin:0; font-size:17px; line-height:1.65; }
+.pricing-block { margin-top:48px; }
+.pricing-subtitle { margin:0 0 18px; color:#eee7db; font:600 clamp(24px,3vw,32px)/1.2 'Spectral',serif; }
+.pricing-section-description { margin:-5px 0 20px; color:#aaa59b; font-size:16px; line-height:1.65; }
+.pricing-grid { display:grid; gap:14px; }
+.pricing-grid-regular { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.pricing-grid-groups { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.pricing-card { min-width:0; display:flex; flex-direction:column; padding:23px; border:1px solid rgba(231,212,176,.16); background:linear-gradient(145deg,rgba(255,255,255,.035),rgba(255,255,255,.012)); }
+.pricing-card h4 { margin:0 0 11px; color:#f0e9de; font:600 22px/1.22 'Spectral',serif; }
+.pricing-card-description { margin:0 0 15px; color:#b9b2a7; font-size:16px; line-height:1.65; }
+.pricing-details { display:grid; gap:7px; margin:0 0 14px; padding:0; list-style:none; color:#a9a297; font-size:15px; line-height:1.55; }
+.pricing-details li { position:relative; padding-left:15px; }
+.pricing-details li::before { content:''; position:absolute; top:.65em; left:0; width:5px; height:5px; background:#b6403d; transform:rotate(45deg); }
+.pricing-lines { display:grid; gap:10px; margin:auto 0 0; padding:14px 0 0; border-top:1px solid rgba(231,212,176,.13); list-style:none; }
+.pricing-lines li { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; color:#c1baae; font-size:16px; line-height:1.45; }
+.pricing-lines strong { flex:none; color:#e3c584; font-size:17px; white-space:nowrap; }
+.pricing-card-course { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; gap:28px; padding:28px; border-color:rgba(192,67,64,.42); background:linear-gradient(115deg,rgba(140,39,42,.15),rgba(255,255,255,.015)); }
+.pricing-card-label { display:block; margin-bottom:8px; color:#d8b673; font-size:12px; font-weight:700; letter-spacing:.13em; }
+.pricing-card-course h4 { margin-bottom:7px; font-size:25px; }
+.pricing-card-course .pricing-details { margin-bottom:0; }
+.pricing-course-price { color:#e3c584; font:26px 'Russo One',sans-serif; white-space:nowrap; }
+.pricing-course-price small { display:block; margin-top:4px; color:#a7a095; font:15px 'DM Sans',sans-serif; text-align:right; }
+.pricing-contact { display:grid; gap:15px; margin-top:42px; padding-top:23px; border-top:1px solid rgba(231,212,176,.15); }
+.pricing-contact > p { margin:0; color:#c6bdad; font-size:17px; line-height:1.6; }
+.pricing-contact > div { display:flex; flex-wrap:wrap; gap:12px; }
+.pricing-contact .btn-primary,.pricing-contact .btn-ghost { font-size:16px; }
+.pricing-contact > span { display:flex; align-items:center; gap:8px; color:#9a9387; font-size:14px; }
+.pricing-contact > span svg { flex:none; color:#c49e5c; }
+
+/* Instructor carousel: portraits are configured in src/data/instructors.ts */
+.trainer-carousel { width:min(960px,100%); margin-inline:auto; }
+.trainer-carousel-viewport { border:1px solid rgba(231,212,176,.16); background:#171719; touch-action:pan-y; }
+.trainer-carousel-viewport:focus-visible { outline:2px solid #d4ad69; outline-offset:4px; }
+.instructor-card { min-height:370px; display:grid; grid-template-columns:minmax(250px,.82fr) minmax(0,1fr); animation:instructor-enter .35s ease both; }
+@keyframes instructor-enter { from { opacity:.35; transform:translateX(8px); } to { opacity:1; transform:translateX(0); } }
+.instructor-photo { position:relative; min-height:370px; overflow:hidden; background:radial-gradient(ellipse at center,rgba(149,62,49,.27),transparent 47%),linear-gradient(145deg,#272321,#171719 72%); }
+.instructor-photo img { display:block; width:100%; height:100%; min-height:370px; object-fit:cover; object-position:center; }
+.instructor-photo-placeholder { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; color:#d1ae70; background:radial-gradient(ellipse at center,rgba(149,62,49,.27),transparent 47%),linear-gradient(145deg,#272321,#171719 72%); }
+.instructor-photo-placeholder::before,.instructor-photo-placeholder::after { content:''; position:absolute; border:1px solid rgba(215,183,119,.18); border-radius:50%; aspect-ratio:1; width:48%; }
+.instructor-photo-placeholder::after { width:37%; border-color:rgba(215,183,119,.12); }
+.instructor-photo-placeholder > span { z-index:1; font:82px 'Spectral',serif; }
+.instructor-photo-placeholder > svg { z-index:1; }
+.instructor-photo-placeholder small { position:absolute; bottom:15px; right:15px; color:#aaa08e; font-size:12px; letter-spacing:.12em; }
+.instructor-info { display:flex; flex-direction:column; justify-content:center; padding:clamp(25px,4vw,48px); }
+.instructor-info .eyebrow { margin-bottom:9px; font-size:12px; }
+.instructor-info h3 { margin:0 0 7px; color:#f1e9dc; font:26px/1.2 'Russo One',sans-serif; }
+.instructor-info .trainer-role { margin:0; color:#c5b79c; font-size:16px; line-height:1.5; }
+.instructor-introduction { margin:20px 0; color:#c1baaf; font-size:17px; line-height:1.7; }
+.instructor-info .achievement { margin:0; color:#d9ba79; font-size:14px; line-height:1.6; }
+.trainer-carousel-controls { display:flex; align-items:center; gap:15px; margin-top:17px; }
+.carousel-arrow { width:44px; height:44px; display:grid; place-items:center; border:1px solid rgba(221,178,105,.4); background:transparent; color:#e4cc9c; cursor:pointer; transition:background .2s,border-color .2s; }
+.carousel-arrow:hover { background:rgba(153,40,44,.26); border-color:#c04340; }
+.carousel-arrow:focus-visible,.carousel-dot:focus-visible { outline:2px solid #e0bd75; outline-offset:3px; }
+.carousel-pagination { display:flex; align-items:center; gap:8px; margin-right:auto; }
+.carousel-dot { width:9px; height:9px; padding:0; border:0; border-radius:10px; background:#6b6254; cursor:pointer; transition:width .2s,background .2s; }
+.carousel-dot.is-active { width:25px; background:#c54340; }
+.carousel-count { color:#bcb19c; font-size:14px; letter-spacing:.08em; }
+.instructor-proof { margin:20px 0 0; color:#b7aa8e; text-align:center; font-size:16px; }
+
+/* Two-pixel increase for site copy while leaving display headings unchanged. */
+.hero-description { font-size:16px; }
+.intro-grid>p,.section-aside { font-size:15px; }
+.direction-copy p { font-size:14px; }
+.visit-intro>p,.event-content>p,.gathering-title>p,.signup-copy>p,.dialog-detail { font-size:15px; }
+.step-row p { font-size:14px; }
+.gathering-item p { font-size:13px; }
+.team-offer p,.rental-copy p { font-size:18px; }
+.capital-copy p { font-size:20px; }
+.text-action,.card-more { font-size:15px; }
+.hero-overline { font-size:12px; }
+.crest-text { font-size:11px; }
+.hero-note { font-size:15px; }
+.hero-bottom { font-size:10px; }
+.hero-seal { font-size:11px; }
+.hero-seal small { font-size:9px; }
+.nav-link { font-size:14px; }
+.nav-cta { font-size:15px; }
+.mobile-nav a { font-size:16px; }
+.direction-top { font-size:11px; }
+.direction-copy .eyebrow { font-size:11px; }
+.event-tag { font-size:11px; }
+.event-disclaimer { font-size:14px; }
+.event-side-label { font-size:10px; }
+.gathering-title .btn-primary { font-size:14px; }
+.gathering-item>span { font-size:15px; }
+.signup-promise { font-size:13px; }
+.panel-cap { font-size:10px; }
+.signup-panel>p { font-size:13px; }
+.lead-form label { font-size:16px; }
+.lead-form .field { font-size:18px; }
+.submit-btn { font-size:16px; }
+.form-consent { font-size:14px; }
+.form-error { font-size:16px; }
+.success-card p { font-size:15px; }
+.detail-points>div { font-size:16px; }
+.contact-lines span { font-size:10px; }
+.contact-lines a { font-size:15px; }
+.location-copy .btn-ghost { font-size:13px; }
+.footer-inner>p { font-size:14px; }
+.footer-top,.footer-bottom { font-size:12px; }
+.contact-lines a small { font-size:13px; }
+.mobile-sticky-cta { font-size:14px; }
+
+@media(max-width:1120px) {
+  .nav-link { font-size:13px; }
+}
+@media(max-width:980px) {
+  .pricing-grid-regular,.pricing-grid-groups { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
+@media(max-width:760px) {
+  .hero-description,.intro-grid>p,.section-aside,.direction-copy p,.visit-intro>p,.event-content>p,.gathering-title>p,.signup-copy>p,.location-copy>p,.dialog-detail { font-size:17px; }
+  .step-row p,.gathering-item p { font-size:16px; }
+  .capital-copy p { font-size:19px; }
+  .direction-copy .eyebrow { font-size:10px; }
+  .hero-bottom { font-size:11px; }
+  .nav-cta { font-size:14px; }
+  .pricing-grid-regular,.pricing-grid-groups { grid-template-columns:1fr; }
+  .pricing-card { padding:19px; }
+  .pricing-card-course { grid-template-columns:1fr; gap:18px; }
+  .pricing-course-price small { text-align:left; }
+  .pricing-contact > div { flex-direction:column; }
+  .pricing-contact > div > a { width:100%; }
+  .pricing-contact > span { align-items:flex-start; }
+  .instructor-card { grid-template-columns:minmax(125px,.72fr) minmax(0,1.28fr); min-height:340px; }
+  .instructor-photo,.instructor-photo img { min-height:340px; }
+  .instructor-info { padding:21px 17px; }
+  .instructor-info h3 { font-size:22px; }
+  .instructor-info .trainer-role { font-size:16px; }
+  .instructor-introduction { font-size:16px; margin:15px 0; }
+  .instructor-photo-placeholder small { right:8px; bottom:10px; font-size:10px; }
+  .trainer-carousel-controls { gap:11px; }
+  .footer-contact-links { width:100%; flex-direction:row; flex-wrap:wrap; gap:12px 22px; }
+  .footer-contact-links a { font-size:16px; }
+  .map-card { height:clamp(340px,100vw,520px); }
+  .map-iframe { min-height:340px; }
+  .panel-cap { font-size:9px; }
+  .footer-bottom { font-size:12px; }
+  .mobile-sticky-cta { font-size:14px; }
+}
+@media(max-width:520px) {
+  .instructor-card { grid-template-columns:1fr; }
+  .instructor-photo,.instructor-photo img { min-height:220px; height:220px; }
+  .instructor-photo-placeholder > span { font-size:65px; }
+  .instructor-info { padding:22px 19px; }
+  .instructor-info h3 { font-size:21px; }
+}
