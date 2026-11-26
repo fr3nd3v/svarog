@@ -2666,6 +2666,7 @@
   margin-inline: auto;
 }
 .instructor-carousel__viewport {
+  display: grid;
   border: 1px solid rgba(231, 212, 176, 0.16);
   background: #171719;
   touch-action: pan-y;
@@ -2675,9 +2676,14 @@
   outline-offset: 4px;
 }
 .instructor-carousel__card {
-  min-height: 370px;
   display: grid;
-  grid-template-columns: minmax(250px, 0.82fr) minmax(0, 1fr);
+  grid-area: 1 / 1;
+  grid-template-columns: 300px minmax(0, 1fr);
+  min-height: 400px;
+  visibility: hidden;
+}
+.instructor-carousel__card--active {
+  visibility: visible;
   animation: instructor-enter 0.35s ease both;
 }
 @keyframes instructor-enter {
@@ -2692,76 +2698,22 @@
 }
 .instructor-carousel__photo {
   position: relative;
-  min-height: 370px;
   overflow: hidden;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(149, 62, 49, 0.27),
-      transparent 47%
-    ),
-    linear-gradient(145deg, #272321, #171719 72%);
+  background: #171719;
 }
 .instructor-carousel__photo img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  min-height: 370px;
-  object-fit: cover;
-  object-position: center;
-}
-.instructor-carousel__placeholder {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  color: #d1ae70;
-  background:
-    radial-gradient(
-      ellipse at center,
-      rgba(149, 62, 49, 0.27),
-      transparent 47%
-    ),
-    linear-gradient(145deg, #272321, #171719 72%);
-}
-.instructor-carousel__placeholder::before,
-.instructor-carousel__placeholder::after {
-  content: "";
-  position: absolute;
-  border: 1px solid rgba(215, 183, 119, 0.18);
-  border-radius: 50%;
-  aspect-ratio: 1;
-  width: 48%;
-}
-.instructor-carousel__placeholder::after {
-  width: 37%;
-  border-color: rgba(215, 183, 119, 0.12);
-}
-.instructor-carousel__placeholder > span {
-  z-index: 1;
-  font:
-    82px "Spectral",
-    serif;
-}
-.instructor-carousel__placeholder > svg {
-  z-index: 1;
-}
-.instructor-carousel__placeholder small {
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  color: #aaa08e;
-  font-size: 12px;
-  letter-spacing: 0.12em;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
 }
 .instructor-carousel__info {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: clamp(25px, 4vw, 48px);
+  padding: clamp(24px, 3.5vw, 48px);
 }
 .instructor-carousel__info .eyebrow {
   margin-bottom: 9px;
@@ -3057,12 +3009,12 @@
     align-items: flex-start;
   }
   .instructor-carousel__card {
-    grid-template-columns: minmax(125px, 0.72fr) minmax(0, 1.28fr);
-    min-height: 340px;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    min-height: 0;
   }
-  .instructor-carousel__photo,
-  .instructor-carousel__photo img {
-    min-height: 340px;
+  .instructor-carousel__photo {
+    height: clamp(240px, 95vw, 480px);
   }
   .instructor-carousel__info {
     padding: 21px 17px;
@@ -3076,11 +3028,6 @@
   .instructor-carousel__text {
     font-size: 16px;
     margin: 15px 0;
-  }
-  .instructor-carousel__placeholder small {
-    right: 8px;
-    bottom: 10px;
-    font-size: 10px;
   }
   .instructor-carousel__controls {
     gap: 11px;
@@ -3111,17 +3058,6 @@
   }
 }
 @media (max-width: 520px) {
-  .instructor-carousel__card {
-    grid-template-columns: 1fr;
-  }
-  .instructor-carousel__photo,
-  .instructor-carousel__photo img {
-    min-height: 220px;
-    height: 220px;
-  }
-  .instructor-carousel__placeholder > span {
-    font-size: 65px;
-  }
   .instructor-carousel__info {
     padding: 22px 19px;
   }
