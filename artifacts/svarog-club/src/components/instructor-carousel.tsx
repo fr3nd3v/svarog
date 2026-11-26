@@ -30,9 +30,9 @@ export default function InstructorCarousel() {
   };
 
   return (
-    <div className="trainer-carousel" data-testid="carousel-instructors">
+    <div className="instructor-carousel" data-testid="carousel-instructors">
       <div
-        className="trainer-carousel-viewport"
+        className="instructor-carousel__viewport"
         role="region"
         aria-label="Наставники клуба"
         aria-roledescription="карусель"
@@ -45,11 +45,11 @@ export default function InstructorCarousel() {
         onTouchEnd={handleTouchEnd}
       >
         <article
-          className="instructor-card"
+          className="instructor-carousel__card"
           data-testid={`card-instructor-${profile.id}`}
           aria-label={`Профиль ${activeIndex + 1} из ${instructors.length}`}
         >
-          <div className="instructor-photo">
+          <div className="instructor-carousel__photo">
             {profile.photo ? (
               <img
                 src={publicAssetUrl(profile.photo)}
@@ -61,7 +61,7 @@ export default function InstructorCarousel() {
               />
             ) : (
               <div
-                className="instructor-photo-placeholder"
+                className="instructor-carousel__placeholder"
                 role="img"
                 aria-label={`Фотография: ${profile.role}`}
               >
@@ -71,32 +71,32 @@ export default function InstructorCarousel() {
               </div>
             )}
           </div>
-          <div className="instructor-info">
+          <div className="instructor-carousel__info">
             <span className="eyebrow">{profile.discipline}</span>
             <h3>{profile.name}</h3>
-            <p className="trainer-role">{profile.role}</p>
-            <p className="instructor-introduction">{profile.introduction}</p>
-            <p className="achievement">{profile.experience}</p>
+            <p className="instructor-carousel__role">{profile.role}</p>
+            <p className="instructor-carousel__text">{profile.introduction}</p>
+            <p className="instructor-carousel__experience">{profile.experience}</p>
           </div>
         </article>
       </div>
 
-      <div className="trainer-carousel-controls">
+      <div className="instructor-carousel__controls">
         <button
           type="button"
-          className="carousel-arrow"
+          className="instructor-carousel__arrow"
           aria-label="Предыдущий наставник"
           data-testid="button-instructor-previous"
           onClick={() => goTo(activeIndex - 1)}
         >
           <ArrowLeft size={19} />
         </button>
-        <div className="carousel-pagination" aria-label="Выбор наставника">
+        <div className="instructor-carousel__pagination" aria-label="Выбор наставника">
           {instructors.map((item, index) => (
             <button
               type="button"
               key={item.id}
-              className={`carousel-dot ${index === activeIndex ? 'is-active' : ''}`}
+              className={`instructor-carousel__dot ${index === activeIndex ? 'instructor-carousel__dot--active' : ''}`}
               aria-label={`Показать профиль ${index + 1}: ${item.role}`}
               aria-current={index === activeIndex ? 'true' : undefined}
               data-testid={`button-instructor-slide-${item.id}`}
@@ -104,12 +104,12 @@ export default function InstructorCarousel() {
             />
           ))}
         </div>
-        <span className="carousel-count" aria-hidden="true">
+        <span className="instructor-carousel__count" aria-hidden="true">
           {String(activeIndex + 1).padStart(2, '0')} / {String(instructors.length).padStart(2, '0')}
         </span>
         <button
           type="button"
-          className="carousel-arrow"
+          className="instructor-carousel__arrow"
           aria-label="Следующий наставник"
           data-testid="button-instructor-next"
           onClick={() => goTo(activeIndex + 1)}

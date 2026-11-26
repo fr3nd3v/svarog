@@ -75,13 +75,13 @@ function PriceCard({ program }: { program: PriceCardData }) {
   return (
     <article className="pricing-card" data-testid={`card-price-${program.id}`}>
       <h4>{program.title}</h4>
-      <p className="pricing-card-description">{program.description}</p>
+      <p className="pricing-card__description">{program.description}</p>
       {program.details && (
-        <ul className="pricing-details">
+        <ul className="pricing-card__details">
           {program.details.map((detail) => <li key={detail}>{detail}</li>)}
         </ul>
       )}
-      <ul className="pricing-lines">
+      <ul className="pricing-card__lines">
         {program.prices.map((price) => (
           <li key={price.label}>
             <span>{price.label}</span>
@@ -95,64 +95,64 @@ function PriceCard({ program }: { program: PriceCardData }) {
 
 export default function SvarogPricing() {
   return (
-    <section className="section prices-section" id="prices">
+    <section className="section section--prices" id="prices">
       <div className="wrap">
-        <div className="section-head reveal-on-scroll">
+        <div className="section__head reveal--on-scroll">
           <div>
             <span className="eyebrow">ЗАНЯТИЯ, КУРСЫ И ОТДЫХ</span>
-            <h2 className="section-title">Сколько стоит<br />первый шаг?</h2>
+            <h2 className="section__title">Сколько стоит<br />первый шаг?</h2>
           </div>
-          <p className="section-aside">
+          <p className="section__aside">
             Регулярные занятия, обучающие курсы и групповые программы. Цены указаны по условиям клуба;
             расписание и свободные места уточняйте в группе ВКонтакте.
           </p>
         </div>
 
-        <div className="pricing-safety">
+        <div className="pricing__safety">
           <Shield size={20} aria-hidden="true" />
           <p>Все занятия проходят под руководством опытных инструкторов с полным соблюдением техники безопасности.</p>
         </div>
 
-        <div className="pricing-block">
-          <h3 className="pricing-subtitle">Регулярные занятия и абонементы</h3>
-          <div className="pricing-grid pricing-grid-regular">
+        <div className="pricing__block">
+          <h3 className="pricing__subtitle">Регулярные занятия и абонементы</h3>
+          <div className="pricing__grid pricing__grid--regular">
             {regularPrograms.map((program) => <PriceCard key={program.id} program={program} />)}
           </div>
         </div>
 
-        <div className="pricing-block">
-          <h3 className="pricing-subtitle">Обучающие курсы</h3>
-          <article className="pricing-card pricing-card-course" data-testid="card-price-knife-course">
+        <div className="pricing__block">
+          <h3 className="pricing__subtitle">Обучающие курсы</h3>
+          <article className="pricing-card pricing-card--course" data-testid="card-price-knife-course">
             <div>
-              <span className="pricing-card-label">ИНДИВИДУАЛЬНЫЙ ИНТЕНСИВ</span>
+              <span className="pricing-card__label">ИНДИВИДУАЛЬНЫЙ ИНТЕНСИВ</span>
               <h4>Курс по метанию ножей</h4>
-              <p className="pricing-card-description">Три занятия: на каждом разбираем отдельную технику.</p>
-              <ul className="pricing-details">
+              <p className="pricing-card__description">Три занятия: на каждом разбираем отдельную технику.</p>
+              <ul className="pricing-card__details">
                 <li>Многооборотная, малооборотная и безоборотная техники</li>
                 <li>Длительность — 3 занятия по 1 часу</li>
               </ul>
             </div>
-            <strong className="pricing-course-price">2 500 ₽ <small>за курс</small></strong>
+            <strong className="pricing-card__price">2 500 ₽ <small>за курс</small></strong>
           </article>
         </div>
 
-        <div className="pricing-block">
-          <h3 className="pricing-subtitle">Групповые программы и отдых</h3>
-          <p className="pricing-section-description">
+        <div className="pricing__block">
+          <h3 className="pricing__subtitle">Групповые программы и отдых</h3>
+          <p className="pricing__note">
             Формат для дней рождения, корпоративов, семейных встреч и праздников.
           </p>
-          <div className="pricing-grid pricing-grid-groups">
+          <div className="pricing__grid pricing__grid--groups">
             {groupPrograms.map((program) => <PriceCard key={program.id} program={program} />)}
           </div>
         </div>
 
-        <div className="pricing-contact">
+        <div className="pricing__contact">
           <p>Турниры, сезонные события и другие форматы — в официальной группе клуба.</p>
           <div>
-            <a className="btn-primary" href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">
+            <a className="button--primary" href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">
               Цены и запись в VK <ArrowRight size={17} />
             </a>
-            <a className="btn-ghost" href={CLUB_PHONE_HREF}>
+            <a className="button--ghost" href={CLUB_PHONE_HREF}>
               <Phone size={16} /> {CLUB_PHONE_LABEL}
             </a>
           </div>
