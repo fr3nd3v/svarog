@@ -1,12 +1,11 @@
 import { useRef, useState, type KeyboardEvent, type TouchEvent } from 'react';
-import { ArrowLeft, ArrowRight, Camera } from 'lucide-react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { instructors } from '@/data/instructors';
 import { publicAssetUrl } from '@/lib/public-asset-url';
 
 export default function InstructorCarousel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const touchStartX = useRef<number | null>(null);
-  const profile = instructors[activeIndex];
 
   const goTo = (index: number) => {
     setActiveIndex((index + instructors.length) % instructors.length);
@@ -44,41 +43,47 @@ export default function InstructorCarousel() {
         }}
         onTouchEnd={handleTouchEnd}
       >
-        <article
-          className="instructor-carousel__card"
-          data-testid={`card-instructor-${profile.id}`}
-          aria-label={`Профиль ${activeIndex + 1} из ${instructors.length}`}
-        >
-          <div className="instructor-carousel__photo">
-            {profile.photo ? (
-              <img
-                src={publicAssetUrl(profile.photo)}
-                alt={profile.photoAlt || `Фото: ${profile.role}`}
-                width="720"
-                height="840"
-                loading="lazy"
-                decoding="async"
-              />
-            ) : (
-              <div
-                className="instructor-carousel__placeholder"
-                role="img"
-                aria-label={`Фотография: ${profile.role}`}
-              >
-                <span>{profile.discipline.slice(0, 1)}</span>
-                <Camera size={21} aria-hidden="true" />
-                <small>ФОТО НАСТАВНИКА</small>
+        {instructors.map((profile, index) => {
+          const active = index === activeIndex;
+          const photo = publicAssetUrl(`instructors/${profile.id}-450.avif`);
+          const largePhoto = publicAssetUrl(
+            `instructors/${profile.id}-${profile.largePhotoWidth}.avif`,
+          );
+
+          return (
+            <article
+              key={profile.id}
+              className={`instructor-carousel__card${active ? ' instructor-carousel__card--active' : ''}`}
+              data-testid={active ? `card-instructor-${profile.id}` : undefined}
+              aria-hidden={!active}
+              aria-label={`Профиль ${index + 1} из ${instructors.length}`}
+            >
+              <div className="instructor-carousel__photo">
+                {active && (
+                  <img
+                    src={photo}
+                    srcSet={`${photo} 450w, ${largePhoto} ${profile.largePhotoWidth}w`}
+                    sizes="(max-width: 760px) calc(100vw - 36px), 300px"
+                    alt={profile.photoAlt}
+                    width={450}
+                    height={600}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
               </div>
-            )}
-          </div>
-          <div className="instructor-carousel__info">
-            <span className="eyebrow">{profile.discipline}</span>
-            <h3>{profile.name}</h3>
-            <p className="instructor-carousel__role">{profile.role}</p>
-            <p className="instructor-carousel__text">{profile.introduction}</p>
-            <p className="instructor-carousel__experience">{profile.experience}</p>
-          </div>
-        </article>
+              <div className="instructor-carousel__info">
+                <span className="eyebrow">{profile.discipline}</span>
+                <h3>{profile.name}</h3>
+                <p className="instructor-carousel__role">{profile.role}</p>
+                <p className="instructor-carousel__text">{profile.introduction}</p>
+                <p className="instructor-carousel__experience">
+                  <strong>Опыт:</strong> {profile.experience}
+                </p>
+              </div>
+            </article>
+          );
+        })}
       </div>
 
       <div className="instructor-carousel__controls">
@@ -97,7 +102,7 @@ export default function InstructorCarousel() {
               type="button"
               key={item.id}
               className={`instructor-carousel__dot ${index === activeIndex ? 'instructor-carousel__dot--active' : ''}`}
-              aria-label={`Показать профиль ${index + 1}: ${item.role}`}
+              aria-label={`Показать профиль ${index + 1}: ${item.name}`}
               aria-current={index === activeIndex ? 'true' : undefined}
               data-testid={`button-instructor-slide-${item.id}`}
               onClick={() => goTo(index)}
