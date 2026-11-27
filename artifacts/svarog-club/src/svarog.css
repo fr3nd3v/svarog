@@ -1554,6 +1554,9 @@
   background: linear-gradient(180deg, #0a0a0a, #120909);
 }
 .partners__grid {
+  margin: 0;
+  padding: 0;
+  list-style: none;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   border: 1px solid rgba(232, 213, 181, 0.16);
@@ -2398,8 +2401,8 @@
 
 /* Official mark and direct contact links */
 .brand__mark {
-  width: 42px;
-  height: 42px;
+  width: 48px;
+  height: 48px;
   border: 0;
   transform: none;
   color: inherit;
@@ -3063,5 +3066,87 @@
   }
   .instructor-carousel__info h3 {
     font-size: 21px;
+  }
+}
+
+.directions__visit-link {
+  margin-top: 24px;
+}
+.visit__steps .visit__step--compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+.gatherings__formats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.gatherings__format {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+  min-height: 106px;
+  padding: 18px;
+  color: #e8decd;
+  background: linear-gradient(140deg, #271e1b, #171719);
+  border: 1px solid rgba(219, 195, 154, 0.24);
+  border-left: 3px solid #a84640;
+  font-weight: 600;
+}
+.gatherings__format svg {
+  color: #d5ad69;
+}
+@media (max-width: 420px) {
+  .gatherings__formats {
+    grid-template-columns: 1fr;
+  }
+  .gatherings__format {
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    min-height: 0;
+  }
+}
+.location__address {
+  margin-top: 24px;
+}
+.location__address {
+  color: #e8decd;
+  font-style: normal;
+}
+.location__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.location__map .location__actions {
+  padding: 12px;
+}
+#signup {
+  scroll-margin-top: 100px;
+}
+.location__map {
+  height: auto;
+}
+.location__map .location__frame {
+  height: clamp(340px, 46vw, 600px);
+}
+@media (max-width: 760px) {
+  .hero h1 {
+    font-size: clamp(28px, 7.5vw, 48px);
+  }
+  .hero .hero__content {
+    min-height: 0;
+  }
+}
+
+.gatherings__offer {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+@media (max-width: 760px) {
+  .gatherings__offer {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
