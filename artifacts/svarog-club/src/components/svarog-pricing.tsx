@@ -98,14 +98,7 @@ export default function SvarogPricing() {
     <section className="section section--prices" id="prices">
       <div className="wrap">
         <div className="section__head reveal--on-scroll">
-          <div>
-            <span className="eyebrow">ЗАНЯТИЯ, КУРСЫ И ОТДЫХ</span>
-            <h2 className="section__title">Сколько стоит<br />первый шаг?</h2>
-          </div>
-          <p className="section__aside">
-            Регулярные занятия, обучающие курсы и групповые программы. Цены указаны по условиям клуба;
-            расписание и свободные места уточняйте в группе ВКонтакте.
-          </p>
+          <h2 className="section__title">Цены и форматы занятий</h2>
         </div>
 
         <div className="pricing__safety">
@@ -114,14 +107,14 @@ export default function SvarogPricing() {
         </div>
 
         <div className="pricing__block">
-          <h3 className="pricing__subtitle">Регулярные занятия и абонементы</h3>
+          <h3 className="pricing__subtitle">Занятия и абонементы</h3>
           <div className="pricing__grid pricing__grid--regular">
             {regularPrograms.map((program) => <PriceCard key={program.id} program={program} />)}
           </div>
         </div>
 
         <div className="pricing__block">
-          <h3 className="pricing__subtitle">Обучающие курсы</h3>
+          <h3 className="pricing__subtitle">Курсы</h3>
           <article className="pricing-card pricing-card--course" data-testid="card-price-knife-course">
             <div>
               <span className="pricing-card__label">ИНДИВИДУАЛЬНЫЙ ИНТЕНСИВ</span>
@@ -137,7 +130,7 @@ export default function SvarogPricing() {
         </div>
 
         <div className="pricing__block">
-          <h3 className="pricing__subtitle">Групповые программы и отдых</h3>
+          <h3 className="pricing__subtitle">Групповые программы</h3>
           <p className="pricing__note">
             Формат для дней рождения, корпоративов, семейных встреч и праздников.
           </p>
@@ -150,7 +143,7 @@ export default function SvarogPricing() {
           <p>Турниры, сезонные события и другие форматы — в официальной группе клуба.</p>
           <div>
             <a className="button--primary" href={CLUB_VK_URL} target="_blank" rel="noopener noreferrer">
-              Цены и запись в VK <ArrowRight size={17} />
+              Записаться ВКонтакте <ArrowRight size={17} />
             </a>
             <a className="button--ghost" href={CLUB_PHONE_HREF}>
               <Phone size={16} /> {CLUB_PHONE_LABEL}

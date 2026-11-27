@@ -3065,3 +3065,61 @@
     font-size: 21px;
   }
 }
+
+.directions__visit-link {
+  margin-top: 24px;
+}
+.visit__steps .visit__step--compact {
+  grid-template-columns: minmax(0, 1fr);
+}
+.gatherings__formats {
+  margin: 0;
+  padding-inline-start: 24px;
+  color: #e8decd;
+}
+.gatherings__formats li + li {
+  margin-top: 12px;
+}
+.gatherings__partners,
+.location__address {
+  margin-top: 24px;
+}
+.location__address {
+  color: #e8decd;
+  font-style: normal;
+}
+.location__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+.location__map .location__actions {
+  padding: 12px;
+}
+#signup {
+  scroll-margin-top: 100px;
+}
+.location__map {
+  height: auto;
+}
+.location__map .location__frame {
+  height: clamp(340px, 46vw, 600px);
+}
+@media (max-width: 760px) {
+  .hero h1 {
+    font-size: clamp(28px, 7.5vw, 48px);
+  }
+  .hero .hero__content {
+    min-height: 0;
+  }
+}
+
+.gatherings__offer {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+@media (max-width: 760px) {
+  .gatherings__offer {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
