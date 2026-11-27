@@ -5,7 +5,7 @@ import {
   CLUB_PHONE_HREF,
   CLUB_PHONE_LABEL,
   CLUB_ADDRESS,
-  CLUB_MAP_LINKS,
+  CLUB_YANDEX_MAPS_URL,
   CLUB_VK_URL,
 } from "@/lib/club-contact";
 import { publicAssetUrl } from "@/lib/public-asset-url";
@@ -15,8 +15,12 @@ import {
   ArrowRight,
   Axe,
   BowArrow,
+  Building2,
+  Cake,
   Check,
   ChevronDown,
+  Heart,
+  KeyRound,
   MapPin,
   Menu,
   MessageCircle,
@@ -31,7 +35,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Route, Switch, useLocation, Router as WouterRouter } from "wouter";
 import "./svarog.css";
 
-const svarogLogo = publicAssetUrl("svarog-star-red.webp");
+const svarogLogo = publicAssetUrl("svarog-logo.webp");
 const heroImage = publicAssetUrl("svarog-hero.webp");
 
 const navigation = [
@@ -41,6 +45,15 @@ const navigation = [
   ["Наставники", "#trainers"],
   ["Контакты", "#contacts"],
 ];
+
+const groupFormats = [
+  { label: "День рождения в стиле викингов", icon: Cake },
+  { label: "Корпоратив и тимбилдинг", icon: Building2 },
+  { label: "Занятие для двоих", icon: Heart },
+  { label: "Аренда клуба", icon: KeyRound },
+];
+
+const partners = ["Т-Банк", "Татнефть", "Фестиваль «Каракуз»", "И другие"];
 
 type Direction = {
   id: string;
@@ -62,8 +75,8 @@ const directions: Direction[] = [
   {
     id: "bow",
     icon: BowArrow,
-    title: "Стрельба из лука",
-    description: "Стрельба по мишеням. Также можно попробовать арбалет.",
+    title: "Стрельба из лука и арбалета",
+    description: "Стрельба по мишеням под руководством наставника.",
     detail: "Наставник поможет выбрать снаряжение для первого занятия.",
     features: ["Лук и арбалет", "Подходит новичкам"],
   },
@@ -209,7 +222,7 @@ function AppContent() {
         <div className="wrap header__inner">
           <a href="#top" className="brand" aria-label="Сварог — наверх">
             <span className="brand__mark">
-              <img src={svarogLogo} alt="" width="40" height="40" />
+              <img src={svarogLogo} alt="" width="48" height="48" />
             </span>
             <span className="brand__name">
               СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small>
@@ -375,10 +388,12 @@ function AppContent() {
               </div>
             </div>
             <ul className="gatherings__formats reveal--on-scroll">
-              <li>День рождения в стиле викингов</li>
-              <li>Корпоратив и тимбилдинг</li>
-              <li>Занятие для двоих</li>
-              <li>Аренда клуба</li>
+              {groupFormats.map(({ label, icon: Icon }) => (
+                <li key={label} className="gatherings__format">
+                  <Icon size={24} aria-hidden="true" />
+                  <span>{label}</span>
+                </li>
+              ))}
             </ul>
           </div>
           <div className="wrap gatherings__offer reveal--on-scroll" id="services">
@@ -390,8 +405,20 @@ function AppContent() {
               Уточнить наличие <ArrowRight size={15} />
             </a>
           </div>
-          <div className="wrap gatherings__partners" id="partners">
-            <p>Совместные проекты: Т-Банк, Татнефть, фестиваль «Каракуз».</p>
+        </section>
+
+        <section className="section section--partners" id="partners">
+          <div className="wrap">
+            <div className="section__head reveal--on-scroll">
+              <h2 className="section__title">С нами сотрудничают</h2>
+            </div>
+            <ul className="partners__grid reveal--on-scroll">
+              {partners.map((name, index) => (
+                <li key={name} className={`partners__name partners__name--${index + 1}`}>
+                  <span>{name}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </section>
 
@@ -422,12 +449,10 @@ function AppContent() {
                 src="https://makemap.2gis.ru/widget?data=eJxFUl2PojAU_S_dxzGTUgHRZB4cdAAHEFlnkG7mgY8uVAslUD_AzH_fqrvZNn2555x7T3PPFfA2Jy3JLcIrIlpKOjD7dQWibwiYgTeSiGNLwAg0LW9IK-74FWSc8VbiPyAylN9I4oIKdlPAd3vTCfMM48XmJMxBQjnpspY2gvJaEgJ7_hRYyyKxVwzvIU3sEGa2p7u90WPEBrdeKS7SyrjyOY4uR_JzWuPIOPnD_Owtbm959veZ5i0cdb2NqWOHZVblLF9AukOrLo601qGvQ26zDm8hxRYbMutSki0vkkjr5GNutOpS5Lfr_vUcR-FB1uo1nauZXRTeFp_Joivi6m2foLxPx59HbCr7FF1O2Z4XzvChxJUjfUgOmnbp2NEd06_w_cYTx8KntN6IHH02GJVwTV-p1B7kLIh3JXSjkEldH-_CJkWq7ljaKa0-pG51yqqQZVTppacm33m6swjvXnA1PeamUsWR0qT2QXdsv0xrT2Tos0-i_zMzxHQs_-lt7zoaCJPA2N0chTWH8SkshOU5vtk7C3dzmJoxfF8aLlo-Beb0HBQvL3JZg1Pn5AJmCvx3vkegeISjv63-bzICTmsh-RmXAaJ1Iu7B0dCzqqoI6iNNe56ohq4oX1JPczBDcGp8f41AlTQB7-gjDVfAEgFmD7KmQlVTJvpYMUaA3eBHO2iohoEmY_3WFwycV9KeIdvKWHHGopIQhu9V0R7J9x8Doeo-"
                 sandbox="allow-modals allow-forms allow-scripts allow-same-origin allow-popups allow-top-navigation-by-user-activation"
               />
-              <div className="location__actions" role="group" aria-label="Открыть адрес на карте">
-                {CLUB_MAP_LINKS.map(({ label, href }) => (
-                  <a key={label} className="button--ghost" href={href} target="_blank" rel="noopener noreferrer">
-                    <MapPin size={16} aria-hidden="true" /> {label}
-                  </a>
-                ))}
+              <div className="location__actions">
+                <a className="button--ghost" href={CLUB_YANDEX_MAPS_URL} target="_blank" rel="noopener noreferrer">
+                  <MapPin size={16} aria-hidden="true" /> «Сварог» на Яндекс Картах
+                </a>
               </div>
             </div>
           </div>
@@ -437,7 +462,7 @@ function AppContent() {
         <div className="wrap footer__inner">
           <a href="#top" className="brand" aria-label="Сварог — наверх">
             <span className="brand__mark">
-              <img src={svarogLogo} alt="" width="40" height="40" />
+              <img src={svarogLogo} alt="" width="48" height="48" />
             </span>
             <span className="brand__name">
               СВАРОГ<small>КЛУБ ЖИВОЙ ИСТОРИИ</small>
